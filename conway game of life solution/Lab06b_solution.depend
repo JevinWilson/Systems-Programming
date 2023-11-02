@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1695238923 source:d:\2023au\etec2110\labs\lab07_solution\main.c
+	"game_of_life.h"
+
+1695214091 d:\2023au\etec2110\labs\lab07_solution\game_of_life.h
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+
+1695214018 source:d:\2023au\etec2110\labs\lab07_solution\game_of_life.c
+	"game_of_life.h"
+
+1695910903 source:d:\2023au\etec2110\labs\lab06b_solution\main.c
+	"game_of_life.h"
+
+1695910283 d:\2023au\etec2110\labs\lab06b_solution\game_of_life.h
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+
+1695910378 source:d:\2023au\etec2110\labs\lab06b_solution\game_of_life.c
+	"game_of_life.h"
+

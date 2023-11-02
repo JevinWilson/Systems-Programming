@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1694613502 source:d:\2023au\etec2110\labs\lab06_solution\lab6_util.c
+	"lab6_util.h"
+	<stdlib.h>
+	<math.h>
+
+1694615365 d:\2023au\etec2110\labs\lab06_solution\lab6_util.h
+
+1694613869 source:d:\2023au\etec2110\labs\lab06_solution\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"lab6_util.h"
+
