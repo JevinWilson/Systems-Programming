@@ -1,0 +1,17 @@
+# These records are in the form EMPLOYEE_NAME:EMPLOYEE_ID:EMPLOYEE_SALARY
+# The following are administrators::
+Eric Braun:174328:240378.94
+Sunil Ahuja:285832:190415.87
+
+# The following are staff members:
+Joe Smith:132754:25018.14
+Sally Jones:158113:32019.55
+Janice P Oliver:185639:11458.32
+Robert North:317543:85321.11
+Janice J Oliver:298734:47166.76
+
+# The following are student workers:
+Davy Crockett:345216:5372.18
+Billy Bones:239954:1141.66
+Amanda Nice:398751:514.32
+Tiny T Tim:301865:1093.54
