@@ -3,12 +3,12 @@
 int main() 
 {
     Matrix A = matrix_create(3, 4);
-    // Initialize matrix A with values
+    // the values go to matrix A
     float values_A[] = {5, -3, 8, 1, 2, -1, 5, 4, 0, 9, 3, -2};
     matrix_set_values(&A, values_A);
 
     Matrix B = matrix_create(4, 2);
-    // Initialize matrix B with values
+    // the values go to matrix B
     float values_B[] = {8, 7, -3, 2, 6, 3, 0, -5};
     matrix_set_values(&B, values_B);
 

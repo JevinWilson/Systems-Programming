@@ -5,7 +5,8 @@
 #include <stdlib.h>
 
 // Typedef and declare a Matrix struct
-typedef struct {
+typedef struct 
+{
     unsigned int rows;
     unsigned int columns;
     float** data;

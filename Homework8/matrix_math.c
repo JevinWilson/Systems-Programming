@@ -33,11 +33,11 @@ void matrix_destroy(Matrix* m)
     m->data = NULL;
 }
 
+//put the set value in the matrix
 void matrix_set_item(Matrix* m, unsigned int row, unsigned int column, float value) 
 {
     if (row < m->rows && column < m->columns) 
     {
-        //inputs the set value in the row/column
         m->data[row][column] = value;
     }
 }
@@ -68,35 +68,69 @@ void matrix_set_values(Matrix* m, float* all_values)
 }
 
 //print the braces for the matric
-void matrix_print(Matrix* m, FILE* outfile) {
-    for (unsigned int i = 0; i < m->rows; i++) {
-        if (i == 0) {
-            fprintf(outfile, "/");
-        } else if (i == m->rows - 1) {
-            fprintf(outfile, "\\");
-        } else {
-            fprintf(outfile, "|");
-        }
+void matrix_print(Matrix *m, FILE *outfile)
+{
+    //print output to txt file
+    if(outfile == stdout) 
+    {
+        //if 1 row put in form [1 2 3]
+        if(m->rows == 1) 
+        {
+            printf("[ ");
 
-        for (unsigned int j = 0; j < m->columns; j++) {
-            fprintf(outfile, "%.6f", matrix_get_value(m, i, j)); // Print with 6 decimal places
-            if (j < m->columns - 1) {
-                fprintf(outfile, "     "); // Adjust the spacing between elements as needed
+            // Print the values of the matrix
+            for(int j = 0; j < m->columns; j++) 
+            {
+                printf("%.2f", m->data[0][j]);
+            }
+            printf(" ]\n");
+        } 
+        else 
+        {
+            for(int i = 0; i < m->rows; i++) 
+            {
+                if (i == 0) 
+                {
+                    //top left of matrix
+                    printf("/");
+                } 
+                else if (i == m->rows - 1) 
+                {
+                    //bottom left of matrix
+                    printf("\\");
+                } 
+                else 
+                {
+                    //middle of matrice bracket
+                    printf("|");
+                }
+                for (int j = 0; j < m->columns; j++) 
+                {
+                    //prinnt value and format
+                    printf("   %0.2f   ", m->data[i][j]);
+                }
+                if (i == 0) 
+                {
+                    //top right of matrix
+                    printf("\\\n");
+                } 
+                else if (i == m->rows - 1) 
+                {
+                    //bottom right of matrix
+                    printf("/\n");
+                } else 
+                {
+                    //middle of matrice bracket
+                    printf("|\n");
+                }
             }
         }
-
-        if (i == m->rows - 1) {
-            fprintf(outfile, "/");
-        } else {
-            fprintf(outfile, "|\n");
-        }
     }
-    fprintf(outfile, "\n");
 }
 
 Matrix matrix_multiply(Matrix* a, Matrix* b) 
 {
-    //matrix operation is unable to be done
+    //matrix operation is unable to be done if...
     if (a->columns != b->rows) 
     {
         // Matrices are of incorrect shape to be multiplied
