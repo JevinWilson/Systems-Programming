@@ -239,9 +239,6 @@ int main()
                             employee_ids[j] = employee_ids[j + 1];
                             employee_salaries[j] = employee_salaries[j + 1];
                             strcpy(&employee_names[j * MAX_NAME_SIZE], &employee_names[(j + 1) * MAX_NAME_SIZE]);
-
-                            
-                            
                         }
                         num_records--;
                         break;
