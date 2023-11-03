@@ -3,7 +3,7 @@
 #include <string.h>
 #include "lab6_util.h"
 
-#define MAX_NAME_SIZE 100
+#define MAX_NAME_SIZE 30
 
 int char_counts(const char* s, char c)
 {
@@ -120,51 +120,144 @@ int main()
     // Actually read in from the data file
     read_datafile(data_file_name, employee_names, employee_ids, employee_salaries);
 
-    // Use get_stats to get the stat information about salaries
-    float min_salary, max_salary, avg_salary;
-    get_stats(employee_salaries, num_records, &min_salary, &max_salary, &avg_salary);
-    printf("Employee stats\n\tMin Salary: %f\n\tMax Salary: %f\n\tAvg Salary: %f\n", min_salary, max_salary, avg_salary);
+    
+    
 
-
-    // Print out all values, with the special markings
-    printf("XX                          Name ID     Salary\n");
-    printf("== ============================= ====== ======\n");
-    for (int i = 0; i < num_records; i++)
+    int choice = 0;
+    while (choice != 9)
     {
-        // Print the marking
-        if (employee_salaries[i] == max_salary)
-            printf(">>");
-        else if (employee_salaries[i] == min_salary)
-            printf("<<");
-        else if (employee_salaries[i] > avg_salary)
-            printf(" >");
-        else if (employee_salaries[i] < avg_salary)
-            printf(" <");
-        else
-            printf("  ");
+        //display the menu
+        printf("\nMenu:\n");
+        printf("1. List salaries\n");
+        printf("2. add employess\n");
+        printf("3. Modify a salary\n");
+        printf("4. Delete entry\n");
+        printf("9. Quit\n");
+        printf("Press a number: ");
 
-        // Print the name.  Note the little trick here -- I'm using sprintf to build up format string!
-        // Remember that %% just outputs a %
-        char fmt_str[64];
-        sprintf(fmt_str, "%%-%ds %%d $%%0.02f\n", MAX_NAME_SIZE);      // ex. "%-30s %d %f\n"
-        printf(fmt_str, &employee_names[i * MAX_NAME_SIZE], employee_ids[i], employee_salaries[i]);
+        //get users choice
+        scanf("%d", &choice);
 
-        int choice = 0;
-        while (choice != 9)
+        //functions for choice
+        switch (choice)
         {
-            //display the menu
-            printf("\nMenu:\n");
-            printf("1. List salaries\n");
-            printf("2. add employess\n");
-            printf("3. Modify a salary\n");
-            printf("4. Delete a salary\n");
-            printf("9. Quit\n");
-            printf("Press a number: ");
+            case 1: //list entries
+                // Use get_stats to get the stat information about salaries
+                float min_salary, max_salary, avg_salary;
+                get_stats(employee_salaries, num_records, &min_salary, &max_salary, &avg_salary);
+                printf("Employee stats\n\tMin Salary: %f\n\tMax Salary: %f\n\tAvg Salary: %f\n", min_salary, max_salary, avg_salary);
 
-            //get users choice
-            scanf("%d, &choice");
 
-            //functions for choice
+                // Print out all values, with the special markings
+                printf("XX                          Name ID     Salary\n");
+                printf("== ============================= ====== ======\n");
+                for (int i = 0; i < num_records; i++)
+                {
+                    // Print the marking
+                    if (employee_salaries[i] == max_salary)
+                        printf(">>");
+                    else if (employee_salaries[i] == min_salary)
+                        printf("<<");
+                    else if (employee_salaries[i] > avg_salary)
+                        printf(" >");
+                    else if (employee_salaries[i] < avg_salary)
+                        printf(" <");
+                    else
+                        printf("  ");
+
+                    // Print the name.  Note the little trick here -- I'm using sprintf to build up format string!
+                    // Remember that %% just outputs a %
+                    char fmt_str[64];
+                    sprintf(fmt_str, "%%-%ds %%d $%%0.02f\n", MAX_NAME_SIZE);      // ex. "%-30s %d %f\n"
+                    printf(fmt_str, &employee_names[i * MAX_NAME_SIZE], employee_ids[i], employee_salaries[i]);
+
+        
+                }
+                break;
+                
+            case 2: //add employee
+                if (num_records)
+                {
+                    printf("Enter the employee's name: ");
+                    scanf("%s", &employee_names[num_records * MAX_NAME_SIZE]);
+
+                    printf("Enter the employee's ID: ");
+                    scanf("%d", &employee_ids[num_records]);
+
+                    printf("Enter the employee's salary: ");
+                    scanf("%f", &employee_salaries[num_records]);
+
+                    num_records++;
+                }
+                break;
+
+            case 3: //modify salary
+                //ask for ID
+                int modify_id;
+                printf("Employee ID: ");
+                scanf("%d", &modify_id);
+
+                //search for ID
+                int found = 0;
+                for (int i = 0; i < num_records; i++)
+                {
+                    if (employee_ids[i] == modify_id)
+                    {
+                        found = 1;
+                        float new_salary;
+                        
+                        //enter new salary
+                        printf("Enter new salary: ");
+                        scanf("%f", &new_salary);
+                        
+                        //updates salary
+                        employee_salaries[i] = new_salary;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    printf("Emplayee ID not found.\n", modify_id);
+                }
+                break;
+
+            case 4: //delete entry
+                //ask user for ID
+                int delete_entry;
+                printf("Employee ID: ");
+                scanf("%d", &delete_entry);
+
+                int found2 = 0;
+                for (int i = 0; i < num_records; i++)
+                {
+                    if (employee_ids[i] == delete_entry)
+                    {
+                        found2 = 1;
+                        //shift to fill in del entry
+                        for (int j = i; j < num_records - 1; j++)
+                        {
+                            employee_ids[j] = employee_ids[j + 1];
+                            employee_salaries[j] = employee_salaries[j + 1];
+                            strcpy(&employee_names[j * MAX_NAME_SIZE], &employee_names[(j + 1) * MAX_NAME_SIZE]);
+
+                            
+                            
+                        }
+                        num_records--;
+                        break;
+                    }
+                }
+                if (!found2)
+                {
+                    printf("ID not found");
+                }
+                break;
+
+            case 9: //quit program
+                break;
+            default:
+                printf("Invalid choice\n");
+                break;
         }
     }
 
