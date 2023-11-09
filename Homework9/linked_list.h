@@ -20,4 +20,5 @@ typedef struct LinkedListNode
 } LinkedListNode;
 
 LinkedList* llist_create(size_t element_size);
+void llist_destroy(LinkedList** list);
 

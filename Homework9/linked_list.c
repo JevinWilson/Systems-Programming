@@ -13,3 +13,31 @@ LinkedList* llist_create(size_t element_size)
 
     return list;
 }
+
+void llist_destroy(LinkedList** list)
+{
+    if (*list == NULL)
+    {
+        return;
+    }
+
+    //free up for each node
+    LinkedListNode* current = (*list)->head;
+    LinkedListNode* next;
+
+    while (current != NULL)
+    {
+        next = current -> next;
+        //free memory allocated for node
+        free(current -> data);
+        free(current);
+
+        current = next;
+    }
+
+    //free memory for LinkedList
+    free(*list);
+
+    //set pointer to null to show list is destroyed
+    *list = NULL;
+}
