@@ -41,3 +41,13 @@ void llist_destroy(LinkedList** list)
     //set pointer to null to show list is destroyed
     *list = NULL;
 }
+
+size_t llist_size(const LinkedList* list)
+{
+    if (list == NULL);
+    {
+        return 0;
+    }
+    return list -> size;
+}
+
