@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct LinkedList
 {
@@ -21,5 +22,7 @@ typedef struct LinkedListNode
 
 LinkedList* llist_create(size_t element_size);
 void llist_destroy(LinkedList** list);
+void llist_append(LinkedList* list, const void* data);
+void llist_insert(LinkedList* list, size_t index, const void* data);
 size_t llist_size(const LinkedList* list);
 

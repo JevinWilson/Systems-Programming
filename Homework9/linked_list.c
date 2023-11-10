@@ -42,12 +42,82 @@ void llist_destroy(LinkedList** list)
     *list = NULL;
 }
 
+void llist_append(LinkedList* list, const void* data)
+{
+    //allocate memory
+    LinkedListNode* new_node = (LinkedListNode*)malloc(sizeof(LinkedListNode));
+
+    //allocate memory for new node and copy it to it
+    new_node -> data = malloc(list -> element_size);
+
+    //copy to new node
+    memcpy(new_node -> data, data, list -> element_size);
+    
+    //set the last pointer of the new node to null
+    new_node -> next = NULL;
+
+    //if list empty, set head to the new node
+    if(list -> head == NULL)
+    {
+        list -> head = new_node;
+    }
+    else
+    {
+        //have list find the last node
+        LinkedListNode* current = list -> head;
+        while (current -> next != NULL)
+        {
+            current = current -> next;
+        }
+        current -> next = new_node;
+    }
+    list -> size++;
+}
+
+void llist_insert(LinkedList* list, size_t index, const void* data)
+{
+    //allocate memory for the new node
+    LinkedListNode* new_node = (LinkedListNode*)malloc(sizeof(LinkedListNode));
+
+    //allocate memory for new node
+    new_node -> data = malloc(list -> element_size);
+
+    //copy data to new memory
+    memcpy(new_node -> data, data, list -> element_size);
+
+    //set pointer of new node to null, its a standalone node
+    new_node -> next = NULL;
+
+    //insert at the beggining
+    if (index == 0)
+    {
+        new_node -> next = list -> head;
+        list -> head = new_node;
+    }
+    else
+    {
+        //search to find node before specified index
+        LinkedListNode* current = list -> head;
+        for (size_t i = 0; i < index -1; i++)
+        {
+            current = current -> next;
+        }
+
+        //insert new node in to list
+        new_node -> next = current -> next;
+        current -> next = new_node;
+    }
+    //increase size of list
+    list -> size++;
+}
+
 size_t llist_size(const LinkedList* list)
 {
     if (list == NULL);
     {
         return 0;
     }
+    //return the size of the list if its not 0
     return list -> size;
 }
 
