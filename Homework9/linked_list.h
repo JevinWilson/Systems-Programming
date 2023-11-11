@@ -24,5 +24,7 @@ LinkedList* llist_create(size_t element_size);
 void llist_destroy(LinkedList** list);
 void llist_append(LinkedList* list, const void* data);
 void llist_insert(LinkedList* list, size_t index, const void* data);
+void llist_remove(LinkedList* list, size_t index);
+void llist_iterate(const LinkedList* list, int (*func)(const LinkedListNode*));
 size_t llist_size(const LinkedList* list);
-
+size_t llist_total_size(const LinkedList* list);

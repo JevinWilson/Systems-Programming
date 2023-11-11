@@ -5,6 +5,11 @@ LinkedList* llist_create(size_t element_size)
     //create memory for linked list
     LinkedList* list = (LinkedList*)malloc(sizeof(LinkedList));
 
+    if (list == NULL)
+    {
+        return NULL;
+    }
+
     list -> element_size = element_size;
     //start the list at 0
     list -> head = NULL;
@@ -44,6 +49,12 @@ void llist_destroy(LinkedList** list)
 
 void llist_append(LinkedList* list, const void* data)
 {
+    //can't append to an empty list
+    if (list == NULL)
+    {
+        return;
+    }
+
     //allocate memory
     LinkedListNode* new_node = (LinkedListNode*)malloc(sizeof(LinkedListNode));
 
@@ -76,19 +87,48 @@ void llist_append(LinkedList* list, const void* data)
 
 void llist_insert(LinkedList* list, size_t index, const void* data)
 {
-    //allocate memory for the new node
+    //can't insert in an empty list
+    if (list == NULL)
+    {
+        return;
+    }
+
+    //check if added is larger than index
+    if (index > list -> size)
+    {
+        fprintf(stderr, "Can't add larger then the list");
+        return;
+    }
+
+    //if index is equal to size call append
+    if (index == list -> size)
+    {
+        llist_append(list, data);
+        return;
+    }
+
+    //create memory for new list
     LinkedListNode* new_node = (LinkedListNode*)malloc(sizeof(LinkedListNode));
 
-    //allocate memory for new node
-    new_node -> data = malloc(list -> element_size);
+    if (new_node == NULL)
+    {
+        return;
+    }
 
-    //copy data to new memory
+    //create memory for new node
+    new_node -> data = malloc(list -> element_size);
+    if (new_node -> data == NULL)
+    {
+        return;
+    }
+
+    //copy to new created memory 
     memcpy(new_node -> data, data, list -> element_size);
 
-    //set pointer of new node to null, its a standalone node
+    //set pointer of new node to null
     new_node -> next = NULL;
 
-    //insert at the beggining
+    //if inserted at beginning update head
     if (index == 0)
     {
         new_node -> next = list -> head;
@@ -96,19 +136,82 @@ void llist_insert(LinkedList* list, size_t index, const void* data)
     }
     else
     {
-        //search to find node before specified index
+        //search list to find node before said index
         LinkedListNode* current = list -> head;
-        for (size_t i = 0; i < index -1; i++)
+        for (size_t i = 0; i < index -1; ++i)
         {
             current = current -> next;
         }
-
-        //insert new node in to list
+        //insert node into list
         new_node -> next = current -> next;
         current -> next = new_node;
     }
     //increase size of list
     list -> size++;
+}
+
+void llist_remove(LinkedList* list, size_t index)
+{
+    //can't remove from a null list
+    if (list == NULL)
+    {
+        printf(stderr, "Can't remove from a NULL list");
+        return;
+    }
+
+    //update head if removed
+    if (index ==0)
+    {
+        LinkedListNode* temp = list -> head;
+        list -> head = list -> head -> next;
+
+        //free mem allocated for data
+        free(temp -> data);
+        //free mem allocated for node
+        free(temp);
+    }
+
+    else
+    {
+        //search list to find node befor said index
+        LinkedListNode* current = list -> head;
+        for (size_t i = 0; i < index - 1; ++i)
+        {
+            //remove node from list
+            LinkedListNode* temp = current -> next; 
+            current -> next = temp -> next;
+
+            //free memory
+            free(temp -> data);
+            free(temp);
+        }
+        //decrease size of list
+        list -> size--;
+    }
+}
+
+void llist_iterate(const LinkedList* list, int (*func)(const LinkedListNode*))
+{
+    //cant iterate over a null list
+    if (list == NULL)
+    {
+        return;
+    }
+
+    //iterate over each node
+    LinkedListNode* current = list -> head;
+    while (current != NULL)
+    {
+        //add user supplied function to current node
+        int result = func(current);
+        if (result == 0)
+        {
+            //if 0 stop immediatly
+            break;
+        }
+        //move to next node
+        current = current -> next;
+    }
 }
 
 size_t llist_size(const LinkedList* list)
@@ -121,3 +224,27 @@ size_t llist_size(const LinkedList* list)
     return list -> size;
 }
 
+size_t llist_total_size(const LinkedList* list)
+{
+    if (list == NULL)
+    {
+        return 0;
+    }
+    size_t total_size = 0;
+
+    //size of list structure
+    total_size += sizeof(LinkedList);
+
+    //size of each node x number of nodes
+    total_size += list -> size * sizeof(LinkedListNode);
+
+    //size of data stored in each node x number of nodes
+    LinkedListNode* current = list -> head;
+
+    while (current != NULL)
+    {
+        total_size += list -> element_size;
+        current = current -> next;
+    }
+    return total_size;
+}
