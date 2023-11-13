@@ -4,7 +4,7 @@
 int print_float(const LinkedListNode* node)
 {
     const float* data = (const float*)node -> data;
-    printf("%.2f, ", *data);
+    printf("%.1f, ", *data);
 
     //continue iterating
     return 1;
@@ -33,10 +33,10 @@ int main()
 
     //test other llist functions
     size_t listSize = llist_size(floatList);
-    size_t totatSize = llist_total_size(llist_total_size(floatList));
+    size_t totalSize = (size_t)llist_total_size(floatList);
 
-    printf("Size of list: \n", listSize);
-    printf("Total size of list: \n", totatSize);
+    printf("Size of list: %zu\n", listSize);
+    printf("Total size of list: %zu bytes\n", totalSize);
 
     //destroy 
     llist_destroy(floatList);

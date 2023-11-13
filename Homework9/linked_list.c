@@ -19,15 +19,15 @@ LinkedList* llist_create(size_t element_size)
     return list;
 }
 
-void llist_destroy(LinkedList** list)
+void llist_destroy(LinkedList* list)
 {
-    if (*list == NULL)
+    if (list == NULL)
     {
         return;
     }
 
     //free up for each node
-    LinkedListNode* current = (*list)->head;
+    LinkedListNode* current = list->head;
     LinkedListNode* next;
 
     while (current != NULL)
@@ -41,10 +41,10 @@ void llist_destroy(LinkedList** list)
     }
 
     //free memory for LinkedList
-    free(*list);
+    free(list);
 
     //set pointer to null to show list is destroyed
-    *list = NULL;
+    list = NULL;
 }
 
 void llist_append(LinkedList* list, const void* data)
@@ -155,7 +155,7 @@ void llist_remove(LinkedList* list, size_t index)
     //can't remove from a null list
     if (list == NULL)
     {
-        printf(stderr, "Can't remove from a NULL list");
+        fprintf(stderr, "Can't remove from a NULL list");
         return;
     }
 
@@ -216,7 +216,7 @@ void llist_iterate(const LinkedList* list, int (*func)(const LinkedListNode*))
 
 size_t llist_size(const LinkedList* list)
 {
-    if (list == NULL);
+    if (list == NULL)
     {
         return 0;
     }

@@ -21,7 +21,7 @@ typedef struct LinkedListNode
 } LinkedListNode;
 
 LinkedList* llist_create(size_t element_size);
-void llist_destroy(LinkedList** list);
+void llist_destroy(LinkedList* list);
 void llist_append(LinkedList* list, const void* data);
 void llist_insert(LinkedList* list, size_t index, const void* data);
 void llist_remove(LinkedList* list, size_t index);
