@@ -4,7 +4,14 @@
 int print_float(const LinkedListNode* node)
 {
     const float* data = (const float*)node -> data;
-    printf("%.1f, ", *data);
+    //("%.1f, ", *data), outputs (x, y, z, )
+    printf("%.1f", *data);
+
+    //get rid of comma and space at the end
+    if (node -> next != NULL)
+    {
+        printf(", ");
+    }
 
     //continue iterating
     return 1;
@@ -27,7 +34,20 @@ int main()
     llist_append(floatList, &data3);
 
     //use _iterate to print to the list
-    printf("(");
+    printf("Original list: (");
+    llist_iterate(floatList, print_float);
+    printf(")\n");
+
+    //_insert
+    float insert = 9.9;
+    llist_insert(floatList, 2, &insert);
+
+    //_remove
+    llist_remove(floatList, 3);
+    //remove last index
+    llist_remove(floatList, llist_size(floatList) - 1);
+
+    printf("New list: (");
     llist_iterate(floatList, print_float);
     printf(")\n");
 
