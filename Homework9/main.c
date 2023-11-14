@@ -22,7 +22,7 @@ int main()
     //create linked list of float
     LinkedList* floatList = llist_create(sizeof(float));
 
-    //append floats
+    //_append
     float data0 = 1.1;
     float data1 = 2.3;
     float data2 = 4.5;
@@ -38,14 +38,27 @@ int main()
     llist_iterate(floatList, print_float);
     printf(")\n");
 
-    //_insert
+    //_insert: inserts at index 2 and moves the rest up 1 index
     float insert = 9.9;
     llist_insert(floatList, 2, &insert);
 
-    //_remove
+    //appends when inserting is equal to the size of the list (comment out _append)
+    /*
+    float data0 = 9.8;
+    llist_append(floatList, &data0);
+
+    float insert = 9.9;
+    llist_insert(floatList, 1, &insert);
+    */
+
+    //_remove: removes said index and adjust the list accordingly
     llist_remove(floatList, 3);
+    /*
+    //remove 1st index
+    llist_remove(floatList, 0)
     //remove last index
     llist_remove(floatList, llist_size(floatList) - 1);
+    */
 
     printf("New list: (");
     llist_iterate(floatList, print_float);
