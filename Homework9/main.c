@@ -60,9 +60,7 @@ int main()
     llist_remove(floatList, llist_size(floatList) - 1);
     */
 
-    printf("New list: (");
-    llist_iterate(floatList, print_float);
-    printf(")\n");
+
 
     //test other llist functions
     size_t listSize = llist_size(floatList);
@@ -70,7 +68,10 @@ int main()
 
     printf("Size of list: %zu\n", listSize);
     printf("Total size of list: %zu bytes\n", totalSize);
-
+    
+    printf("New list: (");
+    llist_iterate(floatList, print_float);
+    printf(")\n");
     //destroy 
     llist_destroy(floatList);
     
