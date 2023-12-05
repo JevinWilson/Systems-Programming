@@ -19,7 +19,7 @@ end
 
 
 //Program 2
-
+/*
 #include "encode_decode.h"
 
 int main() 
@@ -137,3 +137,4 @@ int main()
 
     return 0;
 }
+*/
