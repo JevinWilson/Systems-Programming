@@ -1,7 +1,5 @@
 #include "encode_decode.h"
 
-#include <stdint.h>
-
 uint32_t encode(int X, int Y, unsigned char Type, unsigned char Red, unsigned char Green, unsigned char Blue) 
 {
     uint32_t result = 0;
@@ -16,7 +14,7 @@ uint32_t encode(int X, int Y, unsigned char Type, unsigned char Red, unsigned ch
     //sign of X into next bit
     result |= (X < 0) << 22;
     // 8 LSB of absolute value of X into next 8 bits
-    result |= (abs(X) & 0xFF) << 14;     
+    result |= (abs(X) & 0xFF) << 13;     
     //encode Type, LSB of Type into next bit
     result |= (Type & 0x01) << 13;      
 
