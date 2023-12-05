@@ -45,7 +45,7 @@ int main()
 
 
     // Mask for the bits used during encoding
-    uint32_t mask = (X_SIGN_MASK | X_ABS_MASK | TYPE_MASK | RED_MASK | GREEN_MASK | BLUE_MASK);
+    uint32_t mask = (X_SIGN_MASK | X_ABS_MASK | TYPE_MASK | RED_MASK | GREEN_MASK | BLUE_MASK) & 0xFFFFFFFF;
 
     // test random values
     for (int i = 0; i < 10; ++i) 
@@ -58,12 +58,10 @@ int main()
         int decodedX, decodedY;
         unsigned char decodedType, decodedRed, decodedGreen, decodedBlue;
         decode(randomValue, &decodedX, &decodedY, &decodedType, &decodedRed, &decodedGreen, &decodedBlue);
-
-        // Print intermediate values during encoding
         uint32_t reencodedValue;
-        printf("Original (masked): %u\n", randomValue);
-        printf("Decoded:  X=%d Y=%d Type=%u Red=%u Green=%u Blue=%u\n", decodedX, decodedY, decodedType, decodedRed, decodedGreen, decodedBlue);
-
+       
+        //trouble shooting
+        
         // Intermediate values during encoding
         uint32_t encodedY = ENCODE(abs(decodedY), X_ABS_MASK, X_ABS_SHIFT);
         uint32_t encodedX = ENCODE(abs(decodedX), X_ABS_MASK, X_ABS_SHIFT);
@@ -75,10 +73,13 @@ int main()
         // Combine intermediate values to get the reencoded value
         reencodedValue = encodedY | encodedX | encodedType | encodedRed | encodedGreen | encodedBlue;
 
-        printf("Intermediate (encoded): Y=%u X=%u Type=%u Red=%u Green=%u Blue=%u\n", encodedY, encodedX, encodedType, encodedRed, encodedGreen, encodedBlue);
-        printf("Reencoded: %u\n", reencodedValue);
+        //troubel shooting
+        //printf("Intermediate (encoded): Y=%u X=%u Type=%u Red=%u Green=%u Blue=%u\n", encodedY, encodedX, encodedType, encodedRed, encodedGreen, encodedBlue);
+        //printf("Reencoded: %u\n", reencodedValue);
+        //printf("Original (masked): %u\n", randomValue);
+        //printf("Decoded:  X=%d Y=%d Type=%u Red=%u Green=%u Blue=%u\n", decodedX, decodedY, decodedType, decodedRed, decodedGreen, decodedBlue);
 
-        // check if re-encoded value matches the original random value
+        //check if re-encoded value matches the original random value
         if ((randomValue & mask) != (reencodedValue & mask)) 
         {
             printf("Test failed!\n");

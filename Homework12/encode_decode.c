@@ -35,16 +35,16 @@ void decode(uint32_t value, int *X, int *Y, unsigned char *Type, unsigned char *
     // Extract Y
     *Y = (value >> 23) & 0xFF;
     // Handle the sign of Y
-    *Y = ((value >> 31) & 0x01) ? -*Y : *Y;  
-
+    *Y = ((value >> 31) & 0x01) ? -(int)((value >> 23) & 0xFF) : (int)((value >> 23) & 0xFF);
+    
     // Extract X
     *X = (value >> 14) & 0xFF;
     // Handle the sign of X
     *X = ((value >> 22) & 0x01) ? -*X : *X;  
 
     // Extract Type
-    *Type = (value >> 13) & 0x01;
-
+    *Type = value & 0x01;
+    
     // Extract Red
     *Red = (value >> 9) & 0xF0;
     // Extract Green
